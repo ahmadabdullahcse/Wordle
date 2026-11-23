@@ -15,7 +15,7 @@ struct BoardView: View {
             ForEach(0..<GuessGame.maxGuess, id: \.self) { row in
                 let (word, states) = content(for: row)
                 HStack(spacing: 8) {
-                    ForEach(0..<GuessGame.wordlength, id: \.self) { col in
+                    ForEach(0..<GuessGame.wordLength, id: \.self) { col in
                         let letters = Array(word)
                         TileView(letter: col < letters.count ? letters[col] : nil, state: states[col])
                     }
@@ -25,11 +25,11 @@ struct BoardView: View {
     }
     
     private func content(for row: Int) -> (String, [LetterState]) {
-        let blank = Array(repeating: LetterState.unknown, count: GuessGame.wordlength)
-        if row < game.guess.count {
-            let guess = game.guess[row]
+        let blank = Array(repeating: LetterState.unknown, count: GuessGame.wordLength)
+        if row < game.guesses.count {
+            let guess = game.guesses[row]
             return (guess, game.states(for: guess))
         }
-        return (row == game.guess.count ? game.current : "", blank)
+        return (row == game.guesses.count ? game.current : "", blank)
     }
 }

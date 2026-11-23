@@ -9,19 +9,19 @@ import Observation
 
 @Observable
 final class GuessGame {
-    static let wordlength = 5
+    static let wordLength = 5
     static let maxGuess = 6
     
     private(set) var answer = WordList.random()
-    private(set) var guess: [String] = []
+    private(set) var guesses: [String] = []
     private(set) var current = ""
     private(set) var message: String?
     
-    var isWon: Bool { guess.last == answer }
-    var isOver: Bool { isWon || guess.count == Self.maxGuess }
+    var isWon: Bool { guesses.last == answer }
+    var isOver: Bool { isWon || guesses.count == Self.maxGuess }
     
     func type(_ letter: Character) {
-        guard !isOver, current.count < Self.wordlength else {
+        guard !isOver, current.count < Self.wordLength else {
             return
         }
         current.append(letter)
@@ -34,15 +34,15 @@ final class GuessGame {
     
     func submit() {
         guard !isOver else { return }
-        guard current.count == Self.wordlength else { message = "Not enough letters"; return }
+        guard current.count == Self.wordLength else { message = "Not enough letters"; return }
         guard WordList.isValid(current) else { message = "Not in word list"; return }
-        guess.append(current)
+        guesses.append(current)
         current = ""
     }
     
     func newGame() {
         answer = WordList.random()
-        guess = []
+        guesses = []
         current = ""
         message = nil
     }
@@ -51,10 +51,10 @@ final class GuessGame {
         Evaluator.evaluate(guess: guess, answer: answer)
     }
     
-    var keyBoardStates: [Character: LetterState] {
+    var keyboardStates: [Character: LetterState] {
         var best: [Character: LetterState] = [:]
-        for gues in guess {
-            for (ch, state) in zip(gues, states(for: gues)) {
+        for guess in guesses {
+            for (ch, state) in zip(guess, states(for: guess)) {
                 best[ch] = max(best[ch] ?? .unknown, state)
             }
         }

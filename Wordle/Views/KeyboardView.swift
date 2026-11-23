@@ -12,7 +12,7 @@ struct KeyboardView: View {
     private let rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]
     
     var body: some View {
-        let states = game.keyBoardStates
+        let states = game.keyboardStates
         VStack(spacing: 8) {
             ForEach(rows, id: \.self) { row in
                 HStack(spacing: 5) {

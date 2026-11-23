@@ -5,8 +5,6 @@
 //  Created by Ahmad Abdullah on 18/11/26.
 //
 
-import SwiftUI
-
 enum Evaluator {
     static func evaluate(guess: String, answer: String) -> [LetterState] {
         let g = Array(guess), a = Array(answer)
